@@ -15,6 +15,7 @@
 @interface HomeViewController ()
 
 @property (strong, nonatomic) CustomWebView *webView;
+@property (strong, nonatomic) UIActivityIndicatorView *theActivityView;
 
 @end
 
@@ -22,17 +23,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _webView = [CustomWebView sharedCustomWebView];
+    self.webView = [CustomWebView sharedCustomWebView];
+    self.theActivityView = [[UIActivityIndicatorView alloc] initWithFrame:self.webView.frame];
+    [self.webView addSubview:self.theActivityView];
 
     [self loadPage];
-    [self.view addSubview:_webView];
-    [_webView setBackgroundColor:[UIColor clearColor]];
-    [_webView setOpaque:NO];
+    [self.view addSubview:self.webView];
+    [self.webView setBackgroundColor:[UIColor clearColor]];
+    [self.webView setOpaque:NO];
     
     __weak HomeViewController *homevc = self;
     [self.webView.scrollView addPullToRefreshWithActionHandler:^{
         [homevc pullToRefresh];
     }];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -41,9 +45,25 @@
 
 //加载页面
 - (void)loadPage {
-    NSURL *url = [NSURL URLWithString:URL_HOME];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    [_webView loadRequest:request];
+    if ([URL_HOME isEqualToString:@"failed"]) {
+        NSLog(@"无网络……");
+        [self loadHTML];
+    } else {
+        NSURL *url = [NSURL URLWithString:URL_HOME];
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        [self.webView loadRequest:request];
+    }
+}
+
+//无网络加载本地html
+- (void)loadHTML {
+    NSString *htmlFile = [[NSBundle mainBundle] pathForResource:@"nonetwork" ofType:@"html"];
+    NSString* htmlString = [NSString stringWithContentsOfFile:htmlFile encoding:NSUTF8StringEncoding error:nil];
+    
+    NSString *path = [[NSBundle mainBundle] bundlePath];
+    NSURL *baseURL = [NSURL fileURLWithPath:path];
+    
+    [self.webView loadHTMLString:htmlString baseURL:baseURL];
 }
 
 #pragma mark - Actions
@@ -62,6 +82,37 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)showLoading
+{
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    self.theActivityView.hidden = NO;
+    [self.theActivityView startAnimating];
+}
+
+- (void)hideLoading
+{
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    self.theActivityView.hidden = YES;
+    [self.theActivityView stopAnimating];
+}
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [self showLoading];
+    NSLog(@"start load");
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self hideLoading];
+    NSLog(@"finish load");
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [self hideLoading];
+    NSLog(@"error load");
+}
 
 
 @end

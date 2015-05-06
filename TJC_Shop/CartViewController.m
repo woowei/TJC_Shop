@@ -22,17 +22,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _webView = [CustomWebView sharedCustomWebView];
+    self.webView = [CustomWebView sharedCustomWebView];
     [self loadPage];
-    [self.view addSubview:_webView];
-    [_webView setBackgroundColor:[UIColor clearColor]];
-    [_webView setOpaque:NO];
+    [self.view addSubview:self.webView];
+    [self.webView setBackgroundColor:[UIColor clearColor]];
+    [self.webView setOpaque:NO];
 }
 
 - (void)loadPage {
     NSURL *url = [NSURL URLWithString:URL_CART];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    [_webView loadRequest:request];
+    [self.webView loadRequest:request];
 }
 
 - (void)didReceiveMemoryWarning {

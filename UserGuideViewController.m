@@ -9,9 +9,9 @@
 #import "UserGuideViewController.h"
 #import "ACMacros.h"
 
-#define IMAGE1 @"IMG_1181.JPG"
-#define IMAGE2 @"IMG_1180.JPG"
-#define IMAGE3 @"IMG_1178.JPG"
+#define IMAGE1 @"img1.jpg"
+#define IMAGE2 @"img2.jpg"
+#define IMAGE3 @"img3.jpg"
 
 @interface UserGuideViewController () {
     
@@ -84,6 +84,7 @@
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"开始体验" forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:20.0];
     [btn setFrame:CGRectMake(Main_Screen_Width / 2 - 115, 400, 230, 40)];
     [btn addTarget:self action:@selector(firstpressed) forControlEvents:UIControlEventTouchUpInside];
     [imageView3 addSubview:btn];

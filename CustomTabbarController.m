@@ -7,6 +7,7 @@
 //
 
 #import "CustomTabbarController.h"
+#import "ACMacros.h"
 
 @interface CustomTabbarController ()
 
@@ -17,8 +18,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //ToolBar按钮设置红色
-    [[UITabBar appearance] setSelectedImageTintColor:[UIColor colorWithRed:217/255. green:67/255. blue:78/255. alpha:1.]];
-    [[UITabBar appearance] setBackgroundColor:[UIColor colorWithRed:80/255. green:80/255. blue:80/255. alpha:1.]];
+    [[UITabBar appearance] setSelectedImageTintColor:RGBCOLOR(217, 67, 78)];
+    [[UITabBar appearance] setBackgroundColor:RGBCOLOR(80, 80, 80)];
         
 }
 

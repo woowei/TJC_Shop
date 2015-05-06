@@ -18,12 +18,15 @@
     NSError *error = nil;
     NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&error];
     
-    NSData *dataDecoded = [[NSData alloc] initWithBase64EncodedData:returnData options:0];
-    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:dataDecoded options:0 error:nil];
-    
-    NSDictionary *urlDatas = [jsonData objectForKey:@"datas"];
-    NSString *urlString = [urlDatas objectForKey:key];
-    return urlString;
+    if (returnData) {
+        NSData *dataDecoded = [[NSData alloc] initWithBase64EncodedData:returnData options:0];
+        NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:dataDecoded options:0 error:nil];
+        
+        NSDictionary *urlDatas = [jsonData objectForKey:@"datas"];
+        NSString *urlString = [urlDatas objectForKey:key];
+        return urlString;
+    } else
+        return @"failed";
 }
 
 

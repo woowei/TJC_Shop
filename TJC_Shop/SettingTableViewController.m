@@ -20,8 +20,8 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:238/255. green:238/255. blue:238/255. alpha:1.];
     
-    //self.navigationController.navigationBar.backgroundColor = [UIColor redColor];
-    self.navigationController.navigationBar.opaque = YES;
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    //self.navigationController.navigationBar.opaque = YES;
     self.navigationItem.title = @"设置";
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
@@ -47,7 +47,7 @@
     if (section == 0) {
         return 1;
     } else
-        return 2;
+        return 1;
 }
 
 
@@ -68,10 +68,10 @@
             break;
         case 1:
             if (indexPath.row == 0) {
-                cell.textLabel.text = @"帮助信息";
-            } else if (indexPath.row == 1) {
                 cell.textLabel.text = @"关于";
-            }
+            } //else if (indexPath.row == 1) {
+                //cell.textLabel.text = @"关于";
+            //}
             break;
         default:
             break;
@@ -104,12 +104,12 @@
             break;
         case 1:
             if (indexPath.row == 0) {
-                
-            } else if (indexPath.row == 1) {
                 SettingAboutViewController *aboutView = [[SettingAboutViewController alloc] init];
                 self.navigationController.navigationItem.backBarButtonItem.tintColor = [UIColor blackColor];
                 [self.navigationController pushViewController:aboutView animated:YES];
-            }
+            } //else if (indexPath.row == 1) {
+                
+            //}
             break;
         default:
             break;

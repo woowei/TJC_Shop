@@ -24,26 +24,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _webView = [CustomWebView sharedCustomWebView];
+    self.webView = [CustomWebView sharedCustomWebView];
     [self loadPage];
-    [self.view addSubview:_webView];
+    [self.view addSubview:self.webView];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame = CGRectMake(Main_Screen_Width - 50, 400, 34, 34);
     //[button setTitle:@"设置" forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage imageNamed:@"thingicon"] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@"setting"] forState:UIControlStateNormal];
     [button setTintColor:[UIColor grayColor]];
     [button addTarget:self action:@selector(press) forControlEvents:UIControlEventTouchUpInside];
-    [_webView addSubview:button];
+    [self.webView addSubview:button];
     
-    [_webView setBackgroundColor:[UIColor clearColor]];
-    [_webView setOpaque:NO];
+    [self.webView setBackgroundColor:[UIColor clearColor]];
+    [self.webView setOpaque:NO];
 }
 
 - (void)loadPage {
     NSURL *url = [NSURL URLWithString:URL_PERSONAL];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    [_webView loadRequest:request];
+    [self.webView loadRequest:request];
 }
 
 - (void)press {
